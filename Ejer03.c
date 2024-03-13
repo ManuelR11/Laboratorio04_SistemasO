@@ -4,24 +4,21 @@
 #define NUM_RECURSOS 3
 #define NUM_PROCESOS 5
 
-// Función para comprobar si el sistema se encuentra en un estado seguro
+
 bool estadoSeguro(int disponibles[], int asignados[][NUM_RECURSOS], int maximos[][NUM_RECURSOS], bool finalizados[]) {
     int trabajo[NUM_RECURSOS];
     bool seguro = true;
     int i, j;
 
-    // Inicializar el vector de trabajo con los recursos disponibles
     for (i = 0; i < NUM_RECURSOS; i++) {
         trabajo[i] = disponibles[i];
     }
 
-    // Marcar los procesos finalizados como true
     for (i = 0; i < NUM_PROCESOS; i++) {
         if (finalizados[i] == true) {
             continue;
         }
 
-        // Verificar si los recursos necesarios para este proceso están disponibles
         bool recursosSuficientes = true;
         for (j = 0; j < NUM_RECURSOS; j++) {
             if (maximos[i][j] - asignados[i][j] > trabajo[j]) {
@@ -31,7 +28,6 @@ bool estadoSeguro(int disponibles[], int asignados[][NUM_RECURSOS], int maximos[
         }
 
         if (recursosSuficientes) {
-            // Si hay recursos suficientes, se ejecutará este proceso
             finalizados[i] = true;
             printf("Proceso %d ejecutado.\n", i);
             for (j = 0; j < NUM_RECURSOS; j++) {
@@ -41,7 +37,6 @@ bool estadoSeguro(int disponibles[], int asignados[][NUM_RECURSOS], int maximos[
         }
     }
 
-    // Si todos los procesos no están finalizados, el sistema está en un estado inseguro
     for (i = 0; i < NUM_PROCESOS; i++) {
         if (finalizados[i] == false) {
             seguro = false;
@@ -53,9 +48,8 @@ bool estadoSeguro(int disponibles[], int asignados[][NUM_RECURSOS], int maximos[
 }
 
 int main() {
-    int disponibles[NUM_RECURSOS] = {10, 5, 7}; // Recursos disponibles
+    int disponibles[NUM_RECURSOS] = {10, 5, 7};
 
-    // Matrices para el estado actual de asignaciones y los máximos recursos necesarios para cada proceso
     int asignados[NUM_PROCESOS][NUM_RECURSOS] = {
         {0, 1, 0},
         {2, 0, 0},
